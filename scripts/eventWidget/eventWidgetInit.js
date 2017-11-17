@@ -26,10 +26,7 @@ eventWidget.init = function() {
     const user = getUser();
     
     const fillEvents = function() {
-        let events = getEvents(user)
-        generateEventContent(events)
-        const autoScroll = require("../autoScroll")
-        autoScroll(eventWidget.containerName)
+        getEvents(user)
     }
 
     eventWidget.widgetContainer = "eventsWidget"

@@ -1,38 +1,37 @@
 // friends - Chris Miller
 // returns new object for eventsTable
 
-const getDatabase = require("../database")
+const loadDB= require("../database")
 const setDatabase = require("../datasetter")
 const getActiveUser = require("../auth/getActiveUser")
 
 const friendsJoinTableFactory = friendObject => {
 
-    let db = getDatabase()
+    loadDB(function(database) {
+        let idValue = 0
+        
+        if (database.friends.length > 0) {
+            idValue = database.friends[database.friends.length - 1].id
+        }
     
-    let idValue = 0
-    
-    if (db.friends.length > 0) {
-        idValue = db.friends[db.friends.length - 1].id
-    }
-
-    return Object.create(null, {
-        "id" : {value: ++idValue, enumerable: true, writable: true},
-        "timeStamp" : {value: Date.now(), enumerable: true, writable: true},
-        "userId" : {value: getActiveUser().userId, enumerable: true, writable: true},
-        "friendId" : {value: friendObject.friendId, enumerable: true, writable: true},
-        "save": {value: function () {
-            db.friends.push({
-                "id": this.id,
-                "userId": this.userId,
-                "timeStamp": this.timeStamp,
-                "userId": this.userId,
-                "friendId": this.friendId
-            })
-            setDatabase(db.friends, "friends")
-            return this
-        }}
+        return Object.create(null, {
+            "id" : {value: ++idValue, enumerable: true, writable: true},
+            "timeStamp" : {value: Date.now(), enumerable: true, writable: true},
+            "userId" : {value: getActiveUser().userId, enumerable: true, writable: true},
+            "friendId" : {value: friendObject.friendId, enumerable: true, writable: true},
+            "save": {value: function () {
+                database.friends.push({
+                    "id": this.id,
+                    "userId": this.userId,
+                    "timeStamp": this.timeStamp,
+                    "userId": this.userId,
+                    "friendId": this.friendId
+                })
+                setDatabase(database.friends, "friends")
+                return this
+            }}
+        })
     })
-
 }
 
 module.exports = friendsJoinTableFactory

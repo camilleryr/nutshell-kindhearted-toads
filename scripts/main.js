@@ -4,10 +4,10 @@ const dbEventHandler = require("./dbEvent") // necessary to add the event listen
 
 
 
-if(!getDatabase()){
-    const populateDB = require("./factories/populate_database")
-    populateDB()
-}
+// if(!getDatabase()){
+//     const populateDB = require("./factories/populate_database")
+//     populateDB()
+// }
 
 appInit();
 

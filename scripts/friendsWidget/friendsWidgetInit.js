@@ -6,6 +6,7 @@ const {makeWidget, defaultWidget} = require("../widgetTemplate")
 const getFriends = require("./getFriends");
 const displayFriends = require("./displayFriends");
 const addFriendsListeners = require("./addFriendsListeners");
+const loadDB = require("../database");
 
 
 const friendsWidget = makeWidget()
@@ -30,10 +31,10 @@ friendsWidget.init = function() {
     // initialize new widget and pass in the name of the widget and the addition elements dom string
     defaultWidget.init("friends", additionalElementDomString)
 
-    friendsWidget.getLatest = getFriends;
-    friendsWidget.latest = friendsWidget.getLatest();
     friendsWidget.populate = function(){
-        displayFriends(this.getLatest())
+        loadDB( database => {
+            displayFriends(getFriends(database))
+        })
     }
 
     friendsWidget.populate();

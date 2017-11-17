@@ -4,10 +4,16 @@
 
 
 const getUser = require("../auth/getActiveUser");
+const getFriends = require("../auth/getFriends");
 
 
-function fill(news) {
+function fill(database) {
     const user = getUser()
+    const friends = getFriends()
+    news = database.news
+        .filter(t => t.userId === user.userId || friends.includes(t.userId))
+        .sort((f, s) => s.timeStamp - f.timeStamp);
+
     let domString = ""
     news.forEach(function (article) {
         if (article.userId === user.userId) {

@@ -52,7 +52,7 @@ const dashboardInit = function() {
     friendsWidget.init()
     
     // populate each widget with content
-    global.set([newsWidget, taskWidget, chatWidget, eventWidget, friendsWidget])
+    global.set([eventWidget, chatWidget, taskWidget, newsWidget, friendsWidget])
 
     // show toast message
     toaster.makeToast(`We've freshened up the widgets for you ${user.userName}`,3000);
